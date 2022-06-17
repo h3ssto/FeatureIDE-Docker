@@ -72,13 +72,13 @@ if os.path.isdir(inputPath):
     isDirectory = True
 
     files = [f for f in listdir(inputPath) if isfile(join(inputPath, f))]
-    pathOfResult = inputPath
+    pathOfResult = outputPath
 else:
     isDirectory = False
 
     files = [inputPath.split('/')[-1]]
     fileLength = -1 * len(files[0])
-    pathOfResult = inputPath[:fileLength]
+    pathOfResult = outputPath[:fileLength]
 
 pathOfResult += 'converted/'
 
