@@ -6,6 +6,7 @@ A Docker container providing a CLI to convert feature models using the FeatureID
 
 1. Download the [FeatureIDE](https://featureide.github.io/) jar [3.8.2](https://github.com/FeatureIDE/FeatureIDE/releases/download/v3.8.2/de.ovgu.featureide.lib.fm-v3.8.2.jar) and save it in the `lib` folder.
 2. Download the needed jars (currently found at [GitHub](https://github.com/FeatureIDE/FeatureIDE/tree/3373c95f3d3f2b09557241b854044409c958681d/plugins/de.ovgu.featureide.fm.core/lib)):
+
    the [antlr-3.4.jar](https://github.com/FeatureIDE/FeatureIDE/raw/3373c95f3d3f2b09557241b854044409c958681d/plugins/de.ovgu.featureide.fm.core/lib/antlr-3.4.jar),
    [org.sat4j.core.jar](https://github.com/FeatureIDE/FeatureIDE/raw/3373c95f3d3f2b09557241b854044409c958681d/plugins/de.ovgu.featureide.fm.core/lib/org.sat4j.core.jar),
    and [uvl-parser.jar](https://github.com/FeatureIDE/FeatureIDE/raw/3373c95f3d3f2b09557241b854044409c958681d/plugins/de.ovgu.featureide.fm.core/lib/uvl-parser.jar)

@@ -1,7 +1,0 @@
-FROM openjdk:8-jre-alpine
-RUN mkdir /app
-COPY Converter.jar /app/converter.jar
-RUN mkdir /app/files
-WORKDIR /app
-ENV ARGS=--all
-CMD java -jar converter.jar $ARGS
