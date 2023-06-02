@@ -1,4 +1,6 @@
+import de.ovgu.featureide.fm.core.base.IFeature
 import de.ovgu.featureide.fm.core.base.IFeatureModel
+import de.ovgu.featureide.fm.core.base.event.IEventListener
 import de.ovgu.featureide.fm.core.init.FMCoreLibrary
 import de.ovgu.featureide.fm.core.init.LibraryManager
 import de.ovgu.featureide.fm.core.io.IPersistentFormat
@@ -7,11 +9,16 @@ import de.ovgu.featureide.fm.core.io.manager.FeatureModelManager
 import de.ovgu.featureide.fm.core.io.sxfm.SXFMFormat
 import de.ovgu.featureide.fm.core.io.uvl.UVLFeatureModelFormat
 import de.ovgu.featureide.fm.core.io.xml.XmlFeatureModelFormat
+import de.ovgu.featureide.fm.core.job.SliceFeatureModel
+import de.ovgu.featureide.fm.core.job.monitor.NullMonitor
 import java.io.File
 import java.io.IOException
 import java.nio.file.Files
 import java.nio.file.Paths
+import java.util.stream.Collectors
+import kotlin.io.path.extension
 import kotlin.system.exitProcess
+
 
 object Converter {
     init {
@@ -30,12 +37,12 @@ object Converter {
     fun main(args: Array<String>) {
 
         if (args.isEmpty()) {
-            println("Needs at least one input.")
-            exitProcess(-1)
+            println("You did not select any command")
+            exitProcess(0)
         }
 
         if (args.contains("--help")) {
-            println("TODO")
+            println("This will later display all the information for the different tasks")
             exitProcess(0)
         }
 
@@ -45,6 +52,24 @@ object Converter {
         val sxfm = args.contains("--sxfm") || args.contains("--all")
 
         val check = args.contains("--check")
+
+        if (args.contains("--slice")){
+            val file = File(args.get(args.indexOf("--slice") + 1))
+            val featureNames = args.get(args.indexOf("--slice") + 2).split(",")
+
+            val path = Paths.get(file.path)
+
+            var model = FeatureModelManager.load(path)
+            val featuresToSlice = ArrayList<IFeature>()
+
+            for (name in featureNames){
+                featuresToSlice.add(model.getFeature(name))
+            }
+
+            model = slice(model, featuresToSlice)
+
+            saveFeatureModel(model, path.parent.toString() + "new.xml", XmlFeatureModelFormat())
+        }
 
         val pathFirstRound = "files/first"
         val pathSecondRound = "files/second"
@@ -133,4 +158,18 @@ object Converter {
             else -> null
         }
     }
+
+    private fun slice(featureModel: IFeatureModel, featuresToRemove: Collection<IFeature>?): IFeatureModel? {
+        val featuresToKeep: MutableSet<IFeature> = HashSet(featureModel.features)
+        featuresToKeep.removeAll(featuresToRemove!!.toSet())
+        val featureNamesToKeep: Set<String> = featuresToKeep.stream().map { obj: IFeature -> obj.name }.collect(Collectors.toSet())
+        val sliceJob = SliceFeatureModel(featureModel, featureNamesToKeep, false)
+        return try {
+            sliceJob.execute(NullMonitor())
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
+
 }

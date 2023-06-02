@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<featureModel>
+	<struct>
+		<and abstract="true" mandatory="true" name="NewRootFeature">
+			<and mandatory="true" name="Eclipse">
+				<feature name="JDT"/>
+				<feature name="CDT"/>
+				<feature name="AJDT"/>
+				<and name="FeatureModeling">
+					<feature name="CIDE"/>
+					<feature name="FAMILIAR"/>
+					<and name="FeatureIDE">
+						<feature name="AHEAD"/>
+						<feature name="DeltaJ"/>
+						<feature name="AspectJ"/>
+						<feature name="Munge"/>
+						<feature name="Antenna"/>
+						<feature name="DeltaMontiArc"/>
+					</and>
+					<feature name="ExtendedFM"/>
+					<feature name="MoSoPoLiTe"/>
+				</and>
+				<feature name="DeltaJEclipsePlugin"/>
+			</and>
+		</and>
+	</struct>
+	<constraints>
+		<rule>
+			<disj>
+				<not>
+					<var>AHEAD</var>
+				</not>
+				<var>JDT</var>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<not>
+					<var>Munge</var>
+				</not>
+				<var>JDT</var>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<not>
+					<var>Antenna</var>
+				</not>
+				<var>JDT</var>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<not>
+					<var>AspectJ</var>
+				</not>
+				<var>AJDT</var>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<not>
+					<var>DeltaJ</var>
+				</not>
+				<var>DeltaJEclipsePlugin</var>
+			</disj>
+		</rule>
+		<rule>
+			<disj>
+				<not>
+					<var>FeatureIDE</var>
+				</not>
+				<var>AspectJ</var>
+				<var>JDT</var>
+				<var>CDT</var>
+				<var>Antenna</var>
+				<var>AHEAD</var>
+				<var>DeltaJ</var>
+				<var>Munge</var>
+				<var>DeltaMontiArc</var>
+			</disj>
+		</rule>
+	</constraints>
+</featureModel>
