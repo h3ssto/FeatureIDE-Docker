@@ -20,6 +20,8 @@ dependencies {
     implementation(files("lib/antlr-3.4.jar"))
     implementation(files("lib/uvl-parser.jar"))
     implementation(kotlin("stdlib-jdk8"))
+    //kotlin commandline parser
+    implementation("org.jetbrains.kotlinx:kotlinx-cli:0.3.5")
 }
 
 tasks.test {
